@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review"
+  short_description: "Critical production-grade code review"
+  default_prompt: "Use $review to perform a critical production-level code review of the requested change."

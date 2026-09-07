@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write Agent Policies"
+  short_description: "Generate AGENTS.md policy workflows"
+  default_prompt: "Use $write-agent-policies to generate ready-to-paste AGENTS.md policy blocks, including a start-of-work protocol, adapted to this repo's docs, code layout, and backend conventions."

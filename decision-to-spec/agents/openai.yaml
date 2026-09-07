@@ -1,0 +1,4 @@
+interface:
+  display_name: "Decision to Spec"
+  short_description: "Turn DECISIONS.md into a concise SPEC.md"
+  default_prompt: "Use $decision-to-spec to turn the repo-root DECISIONS.md into a concise SPEC.md using the standard spec template without inventing new product decisions."

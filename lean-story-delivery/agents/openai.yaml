@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lean Story Delivery"
+  short_description: "Plan slices from SPEC.md and generated contracts"
+  default_prompt: "Use $lean-story-delivery to plan the next small product slice from SPEC.md and any generated contracts, and keep docs/slices/current-slice.md updated."
