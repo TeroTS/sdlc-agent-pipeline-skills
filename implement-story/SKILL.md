@@ -22,6 +22,14 @@ story done.
 
 No review-failure input is supported.
 
+## Required Skills
+
+- Apply `$ponytail` before and throughout every implementation, fix, and
+  refactor to keep changes within story scope and choose the smallest solution.
+- Apply `$test-driven-development` to every production-code or IaC
+  implementation, fix, and refactor: write a failing test, make the minimum
+  change pass it, then refactor with tests passing.
+
 ## Outputs
 
 Return:
@@ -68,20 +76,26 @@ A story is dependency-ready only when every ID in `dependsOn` is `done`.
    the selected story's scope, and preserve its `active` status.
 3. Read the selected story's goal, scope, acceptance criteria, required tests,
    definition of done, and contract references completely.
-4. Implement only included scope. Do not implement excluded or adjacent stories.
-5. Run the story's required tests and applicable repository verification.
-6. If a check fails, leave the story `active`, stop, and report the failed
+4. Apply `$ponytail` before each implementation, fix, or refactor.
+5. Apply `$test-driven-development` for each production-code or IaC change:
+   write a failing test, make the minimum change, verify it passes, then
+   refactor with tests passing.
+6. Implement only included scope. Do not implement excluded or adjacent stories.
+7. Run the story's required tests and applicable repository verification.
+8. If a check fails, leave the story `active`, stop, and report the failed
    checks.
-7. After every required check passes, leave the story `active` for pipeline
-   validation, review, and commit.
+9. After every required check passes, leave the story `active` for pipeline
+   validation and commit.
 
 ## Rules
 
 - Make no automatic commit or push.
 - Do not change story fields other than the selected story's `status`.
 - Do not proceed to another story after success or failure.
-- Do not mark a story `done`; the pipeline does so only after validation,
-  review, and commit.
+- Do not mark a story `done`; the pipeline does so only after validation and
+  commit.
+- Do not implement, fix, or refactor production code or IaC without following
+  `$test-driven-development`; apply `$ponytail` throughout.
 - Preserve valid YAML when updating `backlog.yaml`.
 - Final output names the invocation mode, story ID, and checks run, or the
   blocking error.
