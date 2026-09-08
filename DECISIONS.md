@@ -1,91 +1,96 @@
-# Decisions-to-Stories Skill Decisions
+# Implement-Story Skill Decisions
 
 Status: Draft v1
 
 ## Problem Summary
 
-Replace the separate decision-to-spec and lean-story-delivery workflows with one skill that derives a validated YAML story backlog directly from locked decisions.
+Provide a skill that selects and implements exactly one dependency-ready story from the authoritative YAML backlog.
 
 ## Goals and Success Criteria
 
-- Generate a repo-root `backlog.yaml` from `DECISIONS.md`.
-- Make each story independently implementable with scope, acceptance criteria, tests, dependencies, and contract references.
-- Prevent accidental replacement of an existing backlog.
+- Select the correct next story from `backlog.yaml`.
+- Implement and verify exactly one story per invocation.
+- Keep backlog status accurate after success or failure.
 
 ## Primary Roles / Actors
 
-- Product or technical planner invoking `$decisions-to-stories`.
-- Implementer consuming `backlog.yaml` after an explicit implementation request.
+- Developer invoking `$implement-story`.
+- Implementer executing the selected backlog story.
 
 ## Non-Goals
 
-- Implementing backlog stories.
-- Generating or changing contracts.
-- Maintaining slice notes or selecting an implementation target.
-- Updating an existing backlog.
+- Generating or modifying backlog stories beyond status changes.
+- Implementing multiple stories in one invocation.
+- Automatically committing changes.
+- Generating contracts.
 
 ## Locked Decisions
 
 ### Product / Scope
 
-- Replace `decision-to-spec/` and `lean-story-delivery/` with `decisions-to-stories/`.
-- The new skill creates a YAML backlog directly from `DECISIONS.md`.
+- Create the `$implement-story` skill.
+- Implement exactly one story per invocation.
 
 ### UX / Workflow
 
-- The skill only generates and validates the backlog; implementation requires an explicit user request.
-- If `backlog.yaml` already exists, the skill reports an error and makes no changes.
-- `DECISIONS.md` must be ready and have no material open questions.
+- Resume the sole `active` story when present.
+- Otherwise select the first dependency-ready `pending` story.
+- A user-named ready story overrides automatic selection.
+- Change status `pending` to `active` before implementation and `active` to `done` only after all checks pass.
+- On failure, leave the story `active`, stop, and report failed checks.
 
 ### Data / State / Ownership
 
-- The generated backlog is repo-root `backlog.yaml`.
-- Stories use sequential `S001`-style IDs and initial `pending` status.
-- Each story contains the fields shown in the approved YAML example.
+- `backlog.yaml` is the authoritative story source and status record.
+- A story is dependency-ready only when every `dependsOn` story is `done`.
+- The skill may change only the selected story's status.
+- `$decisions-to-stories` may replace `backlog.yaml` only when every existing
+  story is `done`.
 
 ### Interfaces / Contracts
 
-- Read existing contract artifacts when present and add applicable `contractRefs`.
-- Allow an empty `contractRefs` list when no contract artifact exists.
-- Validate generated YAML against a bundled schema or template before writing.
-- Update `$decision-to-contracts` and `$spec-to-contracts` handoffs to `$decisions-to-stories`.
-- Keep `$spec-to-contracts` as a standalone legacy skill.
+- Read the selected story's `contractRefs` and enforce applicable contracts during implementation.
+- Read referenced contract artifacts before coding.
 
 ### Operations / Deployment
 
-- No deployment or runtime behavior is introduced.
+- Run the selected story's `requiredTests` and applicable project verification before marking it done.
+- Do not commit or push automatically.
 
 ## Core Business Rules
 
-- Do not invent stories or interfaces absent from locked decisions.
-- Order stories by dependency and use `dependsOn` for explicit dependencies.
-- Every story must include goal, scope, acceptance criteria, required tests, and definition of done.
-- Required contract behavior belongs in acceptance criteria and definition of done when a contract reference applies.
+- Reject an absent, invalid, or ambiguous backlog.
+- Reject a named story that is not dependency-ready.
+- Reject multiple `active` stories.
+- Do not continue to another story after completion or failure.
+- Do not mark a story done unless its acceptance criteria, required tests, and definition of done are satisfied.
 
 ## UX / Workflow Rules
 
-- Read `DECISIONS.md` completely before generating the backlog.
-- Read existing contract artifacts before deriving references.
-- Fail clearly before writing for a missing or unready decisions pack, material open questions, invalid generated YAML, or existing `backlog.yaml`.
+- Read the selected story completely before implementation.
+- Make the minimum changes needed for the selected story.
+- Report the selected story, completed checks, and remaining active status when applicable.
 
 ## Data / State / Ownership Decisions
 
-- `backlog.yaml` is the authoritative generated story backlog.
-- Existing backlog files are never modified by this skill.
+- Valid statuses are `pending`, `active`, and `done`.
+- Status transitions are `pending → active → done`; a failure remains `active`.
 
 ## Interface / Contract Expectations
 
-- HTTP and non-HTTP contract references may be included when artifacts exist.
-- Empty `contractRefs` is valid when no applicable artifact exists.
+- Contract references constrain implementation when present.
+- An empty `contractRefs` list requires no contract artifact.
 
 ## Operational / Deployment Constraints
 
-- Generated backlog syntax and required fields must be validated before it is written.
+- No automatic commit or push.
+- Stop immediately after one story outcome.
 
 ## Assumptions
 
-- Existing contract artifacts use their established repo paths.
-- A schema or template can be bundled without adding dependencies.
+- `backlog.yaml` conforms to the decisions-to-stories backlog schema.
+- Project-local tests and verification commands are discoverable from the story and repository.
+- A completed backlog is safe to replace before generating a new backlog.
 
 ## Open Questions
 
@@ -94,4 +99,4 @@ Replace the separate decision-to-spec and lean-story-delivery workflows with one
 ## Ready for Spec Generation
 
 - Status: yes
-- Reason: `$decisions-to-stories` can proceed without inventing policy.
+- Reason: `$implement-story` can proceed without inventing policy.

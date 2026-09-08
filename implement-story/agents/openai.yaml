@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implement Story"
+  short_description: "Select and implement one backlog story"
+  default_prompt: "Use $implement-story to select and implement exactly one dependency-ready story from backlog.yaml, updating only its status and running its required checks."

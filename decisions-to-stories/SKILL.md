@@ -27,7 +27,7 @@ writing.
 - Repo-root `DECISIONS.md` exists and is read completely.
 - `DECISIONS.md` is ready for generation.
 - `DECISIONS.md` has no material open questions.
-- Repo-root `backlog.yaml` does not exist.
+- Repo-root `backlog.yaml` does not exist, or every existing story is `done`.
 
 If a precondition fails, report the error and make no changes.
 
@@ -37,7 +37,9 @@ If a precondition fails, report the error and make no changes.
 
 - Read `DECISIONS.md` completely.
 - Read `openapi.yaml` and `docs/contracts.md` when present.
-- If `backlog.yaml` exists, stop with an error; do not update or replace it.
+- If `backlog.yaml` exists with any story not `done`, stop with an error; do not
+  update or replace it.
+- Replace `backlog.yaml` only when every existing story is `done`.
 
 ### 2. Derive stories
 
@@ -63,7 +65,8 @@ If a precondition fails, report the error and make no changes.
 ## Rules
 
 - Do not create `SPEC.md`, slice notes, contracts, code, or clients.
-- Do not modify an existing `backlog.yaml`.
+- Do not modify an existing `backlog.yaml` unless every existing story is
+  `done`.
 - Do not add stories from assumptions, future work, or unresolved questions.
 - Require every story field defined by the schema, including empty lists where
   applicable.

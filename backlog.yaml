@@ -2,33 +2,30 @@ version: 1
 
 stories:
   - id: S001
-    title: Create decisions-to-stories skill
+    title: Create implement-story skill
     status: done
     dependsOn: []
-    goal: Planners can derive a validated implementation backlog directly from locked decisions.
+    goal: Developers can select and implement exactly one dependency-ready backlog story.
     scope:
       include:
-        - decisions-to-stories skill and agent definition
-        - YAML backlog template and schema
-        - Contract-skill handoffs
-        - Removal of decision-to-spec and lean-story-delivery
+        - implement-story skill and agent definition
+        - Backlog story selection and status-transition rules
+        - Contract-reference and required-test enforcement
       exclude:
-        - Story implementation
-        - Contract generation
-        - Existing backlog updates
+        - Automatic commits or pushes
+        - Backlog story creation or reordering
+        - Multi-story implementation
     contractRefs: []
     acceptanceCriteria:
-      - A ready DECISIONS.md produces a dependency-ordered repo-root backlog.yaml.
-      - Every generated story has the required schema fields.
-      - Existing backlog.yaml causes an error without modification.
-      - Missing or unavailable contracts result in an empty contractRefs list.
+      - The skill resumes the sole active story or selects the first dependency-ready pending story.
+      - A named story is implemented only when dependency-ready.
+      - The selected story becomes active before implementation and done only after required checks pass.
+      - A failed check leaves the selected story active and stops further implementation.
     requiredTests:
-      - Parse the backlog template as YAML.
-      - Validate the backlog schema as JSON.
-      - Verify required template fields match the schema.
-      - Verify obsolete skills are absent and contract handoffs target decisions-to-stories.
+      - Validate backlog selection rules for active, pending, blocked, and named stories.
+      - Verify invalid or ambiguous backlog states stop without implementation.
+      - Verify completion and failure status-transition rules.
     definitionOfDone:
       - Required tests pass.
-      - The generated backlog validates against the bundled schema.
-      - decision-to-spec and lean-story-delivery are removed.
-      - Contract skill handoffs target decisions-to-stories.
+      - The skill implements no more than one story per invocation.
+      - The skill does not commit or push automatically.
