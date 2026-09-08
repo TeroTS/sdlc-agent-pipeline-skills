@@ -41,8 +41,7 @@ as conditional.
 - Section headings must match the actual subject matter of the section.
 - Do not emit hybrid headings unless the repo already uses them intentionally
   and the section fully covers both topics.
-- Emit `Commenting Convention` only when the repo already has a standing
-  comment convention or the user explicitly asks to add one.
+- Always emit `Commenting Convention`.
 - When both naming and commenting policies exist, prefer separate
   `Naming Convention` and `Commenting Convention` sections.
 - Emit `TypeScript Return Types` when the repo has authored TypeScript unless
@@ -50,26 +49,6 @@ as conditional.
 - Naming guidance must be discovery-first and repo-specific. Do not force a
   generic architecture or filename pattern over established framework or repo
   conventions.
-
-## Simplicity Rule
-
-```md
-## Simplicity Rule
-
-This simplicity policy applies to all implementation code written by agents.
-
-- Prefer the simplest real solution that fully satisfies the current
-  requirement.
-- Implement the needed functionality and nothing else.
-- If more than one approach works, choose the simpler real approach.
-- Do not add complexity unless it is required for correctness, safety,
-  readability, or an existing repo rule.
-- Simplicity does not justify replacing an available real integration with a
-  mock, fake, or in-memory substitute.
-- Small refactors are acceptable when they directly simplify the implementation.
-- Treat agent-written code as incomplete if it solves the task with unnecessary
-  complexity beyond the current requirement.
-```
 
 ## Required Start-of-Work Protocol
 
@@ -215,27 +194,14 @@ domain-facing code written by agents.
 
 ## Commenting Convention
 
-Emit this section only when the repo already has a standing comment convention
-or the user explicitly asks to add one.
-
 ```md
 ## Commenting Convention
 
-This comment policy applies to new code written by agents.
+This policy applies to every new production code file in `<AUTHORED_SCOPE>`.
 
-- Add a short file header comment to every new authored file in
-  `<AUTHORED_SCOPE>`.
-- Add at least one concise comment above every new function or method.
-- Use comments to explain purpose, intent, domain rules, invariants, or
-  surprising behavior.
-- Do not add comments that only restate obvious code.
-- Treat agent-written code as incomplete if it is missing the required file
-  header comment or function comments.
-
-Exemptions:
-
-- generated files
-- trivial barrel files
-- framework-owned stubs or machine-owned placeholders where comments would be
-  pure noise
+- Add a file header comment that describes the file's functionality.
+- Add one single-line comment above every function and method.
+- Generated files are exempt.
+- Treat agent-written production code as incomplete when a required header or
+  function/method comment is missing.
 ```

@@ -3,9 +3,9 @@ name: write-agent-policies
 description: >
   Generate ready-to-paste `AGENTS.md` policy sections for a repository by
   adapting reusable agent-governance rules to the local codebase. Use when
-  Codex needs to create or revise policy blocks such as
-  `Required Start-of-Work Protocol`, `Simplicity Rule`,
-  `Integration Fidelity Rule`, `Backend Logging Rule`,
+  an agent needs to create or revise policy blocks such as
+  `Required Start-of-Work Protocol`, `Integration Fidelity Rule`,
+  `Backend Logging Rule`,
   `TypeScript Return Types`, or `Commenting Convention`; when migrating
   repo-specific instructions into a reusable form; or when bootstrapping an
   `AGENTS.md` for a new project.
@@ -50,7 +50,6 @@ Return `{"status":"failure","outputs":{},"validation":{"checks":[]},"error":{"co
 - Emit ready-to-paste Markdown sections.
 - Default to these sections unless the user narrows scope:
   - `Required Start-of-Work Protocol`
-  - `Simplicity Rule`
   - `Integration Fidelity Rule`
   - `Backend Logging Rule`
   - `TypeScript Return Types` when the repo has authored TypeScript
@@ -62,8 +61,7 @@ Return `{"status":"failure","outputs":{},"validation":{"checks":[]},"error":{"co
 - Omit `Backend Logging Rule` when the repo has no backend or service layer, or
   when the rule would be misleading.
 - Omit `TypeScript Return Types` when the repo has no authored TypeScript.
-- Omit `Commenting Convention` unless the repo already has a standing comment
-  convention or the user explicitly asks to add one.
+- Always include `Commenting Convention` for new production code.
 - Leave no unresolved placeholders.
 
 ## Workflow
@@ -98,8 +96,7 @@ Return `{"status":"failure","outputs":{},"validation":{"checks":[]},"error":{"co
 
 ### 2. Choose the right level of adaptation
 
-- Keep `Simplicity Rule` and `Integration Fidelity Rule` nearly constant across
-  repos.
+- Keep `Integration Fidelity Rule` nearly constant across repos.
 - Adapt `Required Start-of-Work Protocol` to the repo's actual workflow
   boundaries:
   - name the local `AGENTS.md` sections that most often govern implementation
@@ -138,12 +135,9 @@ Return `{"status":"failure","outputs":{},"validation":{"checks":[]},"error":{"co
     route-support, and shared-package functions when those categories exist
   - avoid noisy annotations for React components, callbacks, small local
     helpers, and obvious one-line transformations
-- Adapt `Commenting Convention` to the repo's authored code layout:
-  - emit it only when repo evidence or explicit user direction establishes a
-    standing comment convention
+- Adapt `Commenting Convention` to the repo's production-code layout:
   - name concrete directories when they are obvious
-  - otherwise generalize to new authored application or infrastructure source
-    files
+  - otherwise generalize to new authored production code files
 
 ### 3. Render from the reference templates
 
@@ -171,10 +165,7 @@ Return `{"status":"failure","outputs":{},"validation":{"checks":[]},"error":{"co
 - Ensure the logging example is valid for the detected language style.
 - Ensure the policies do not instruct the agent to use mocks when a real local
   integration path exists.
-- Ensure comment policy text is grounded in repo evidence or explicit user
-  request, not inferred silently.
-- Ensure comment rules do not require noise on generated files, trivial barrels,
-  or framework stubs.
+- Ensure comment rules exempt generated files only.
 - Do not cite unrelated skills as justification or dependency in generated
   policy text.
 
@@ -203,10 +194,8 @@ Return `{"status":"failure","outputs":{},"validation":{"checks":[]},"error":{"co
 - When a `Naming Convention` section covers project structure, keep it
   discovery-first and repo-specific. The section should help agents place new
   code predictably without imposing a generic architecture.
-- When the repo already documents a stronger comment policy, align the
-  generated block to that convention instead of contradicting it.
-- When the repo has no standing comment convention and the user did not ask for
-  one, omit `Commenting Convention` instead of inventing policy.
+- When the repo already documents a stronger comment policy, preserve it when
+  it meets or exceeds the required convention.
 - Do not cite unrelated workflow templates or external guidance in generated
   `AGENTS.md` policy sections unless the user explicitly asked for them.
 - Keep the generated Markdown portable. Do not embed local absolute paths,

@@ -1,15 +1,15 @@
 ---
-name: codex-cli-repo-hardening
+name: repo-hardening
 description: >
   Use this skill when the user asks to make a code repository “AI friendly”
   or to improve agent reliability, determinism, and workflow ergonomics for AI-assisted development.
 ---
 
-# Codex-CLI Repository Hardening
+# Repository Hardening
 
 ## Goal
 
-Make the repository as Codex-CLI friendly as possible by minimizing ambiguity, maximizing determinism, and providing a single, reliable “golden path” for setup and verification.
+Make the repository agent-friendly by minimizing ambiguity, maximizing determinism, and providing a single, reliable “golden path” for setup and verification.
 
 ## Inputs
 
@@ -38,7 +38,7 @@ Return `{"status":"failure","outputs":{},"validation":{"checks":[]},"error":{"co
 
 - Prefer **one-command setup** and **one-command verification**.
 - Keep workflows **non-interactive** and **deterministic** (pinned versions, lockfiles, reproducible installs).
-- Provide **explicit instructions** in files Codex reads.
+- Provide **explicit instructions** in repository guidance.
 - Optimize for **fast feedback**: minimal, reliable test targets and clear failure output.
 - Avoid agent guessing: document “where things go” and “how to run”.
 - Establish repo-local code comment expectations in `AGENTS.md` only when repo
@@ -84,7 +84,7 @@ It MUST include:
   - coded doubles are allowed only when no runnable local dependency exists, and that exception must be documented
 
 ### B) `scripts/setup` and `scripts/verify` — STRONGLY RECOMMENDED
-Provide stable entrypoints so Codex can run predictable commands.
+Provide stable entrypoints so agents can run predictable commands.
 
 - `scripts/setup` MUST:
   - be non-interactive
@@ -97,13 +97,6 @@ Provide stable entrypoints so Codex can run predictable commands.
   - exit non-zero on any failure
   - print enough context to diagnose issues
   - include the repo's real local dependency-backed boundary tests when the repo owns persistence or external-service integrations, or document a separate canonical command when those cannot run inside the default verify path
-
-### C) `.codex/` repo config (optional, if used in your environment)
-If your org uses repo-local Codex rules, create:
-- `.codex/instructions.md` (repo-specific constraints / gotchas / local workflows)
-- `.codex/README.md` (optional, explain what is repo-local vs global)
-
-> Note: Global constraints belong in `~/.codex/instructions.md` (user-wide), not in the repo.
 
 ## Determinism & Tooling Requirements
 
@@ -195,7 +188,7 @@ If the repo wants spec-term naming as a standing standard, `AGENTS.md` should al
 
 ## Command Runtime & Timeout Behavior (Agent Guidance)
 
-Because Codex-CLI may not expose a configurable execution timeout, the agent MUST:
+For long-running commands, the agent MUST:
 - Treat install/build/test commands as potentially long-running on first run
 - NOT infer “timeout” solely from elapsed time
 - NOT automatically retry with “extended timeout”
