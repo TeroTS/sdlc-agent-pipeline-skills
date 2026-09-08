@@ -16,11 +16,29 @@ story done.
 
 ## Inputs
 
-- `implement <story-id>`: implement a dependency-ready `pending` story.
-- `validation-failure <story-id> <validation-results>`: correct the sole
-  `active` story using the pipeline's structured validation result.
+- `implement`: `<story-id>` for a dependency-ready `pending` story.
+- `validation-failure`: `<same-story-id, validation-results>` for the sole
+  `active` story, using the pipeline's structured validation result.
 
 No review-failure input is supported.
+
+## Outputs
+
+Return:
+
+```json
+{"status":"success","outputs":{"storyId":"S001","storyStatus":"active","workspaceStatus":"changed"},"validation":{"checks":[{"name":"required-tests","passed":true},{"name":"repository-verification","passed":true}]},"error":null}
+```
+
+Workspace changes are side effects; do not return file diffs or repository contents.
+
+## Validation
+
+Validate the invocation and backlog preconditions, then run required tests and applicable repository verification.
+
+## Failure Conditions
+
+Return `{"status":"failure","outputs":{"storyId":"S001","storyStatus":"active"},"validation":{"checks":[]},"error":{"code":"IMPLEMENTATION_FAILED","message":"..."}}` on invalid input, failed preconditions, or failed checks. Do not modify another story.
 
 ## Required reads
 

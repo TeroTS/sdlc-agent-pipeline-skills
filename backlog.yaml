@@ -1,0 +1,31 @@
+version: 1
+
+stories:
+  - id: S001
+    title: Add orchestration skill contracts
+    status: active
+    dependsOn: []
+    goal: Step Functions can invoke pipeline skills and consume consistent machine-readable results.
+    scope:
+      include:
+        - Explicit Inputs, Outputs, Validation, and Failure Conditions sections
+        - Shared JSON result envelope
+        - Artifact paths, IDs, workspace status, and validation results in outputs
+      exclude:
+        - Supporting guidance skills
+        - File diffs or repository contents in results
+        - Pipeline state-transition changes
+    contractRefs: []
+    acceptanceCriteria:
+      - Each listed orchestration skill defines its accepted inputs, outputs, validation, and failure conditions.
+      - Each listed skill returns the shared JSON result envelope.
+      - Outputs distinguish workspace side effects from declared artifact paths and identifiers.
+      - Failures return a serializable error without a successful result.
+    requiredTests:
+      - Verify all five skills contain every required contract section.
+      - Verify each documented JSON envelope has status, outputs, validation, and error fields.
+      - Verify outputs do not include file diffs or repository contents.
+    definitionOfDone:
+      - Required tests pass.
+      - Contract documentation is internally consistent.
+      - Supporting guidance skills remain unchanged.

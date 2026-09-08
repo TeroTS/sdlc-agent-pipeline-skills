@@ -15,6 +15,29 @@ Use this skill to formalize external and boundary-facing contracts before
 implementation. It is OpenAPI-first for HTTP surfaces and uses `docs/contracts.md`
 for non-HTTP or mixed contract sets.
 
+## Inputs
+
+- Repo-root `DECISIONS.md`.
+- Existing contract artifacts, when present.
+
+## Outputs
+
+Return:
+
+```json
+{"status":"success","outputs":{"artifactPaths":["openapi.yaml","docs/contracts.md"],"workspaceStatus":"changed"},"validation":{"checks":[{"name":"contract-validation","passed":true}]},"error":null}
+```
+
+List only contract artifacts actually created or updated. Workspace changes are side effects.
+
+## Validation
+
+Validate each generated contract with available repository tooling and confirm every artifact path in `outputs` exists.
+
+## Failure Conditions
+
+Return `{"status":"failure","outputs":{},"validation":{"checks":[]},"error":{"code":"CONTRACT_GENERATION_FAILED","message":"..."}}` without writing artifacts for missing, ambiguous, or materially unresolved decisions, or failed validation.
+
 ## Default outputs
 
 - `openapi.yaml` when `DECISIONS.md` defines HTTP-facing surfaces

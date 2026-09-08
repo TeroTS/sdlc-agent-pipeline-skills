@@ -13,6 +13,30 @@ description: >
 Use this skill to create the authoritative story backlog directly from locked
 product decisions. It plans only; it never selects or implements a story.
 
+## Inputs
+
+- Repo-root `DECISIONS.md`.
+- Existing contract artifacts, when present.
+- Existing `backlog.yaml`, when present, to verify every story is `done` before replacement.
+
+## Outputs
+
+Return:
+
+```json
+{"status":"success","outputs":{"artifactPaths":["backlog.yaml"],"workspaceStatus":"changed"},"validation":{"checks":[{"name":"yaml-syntax","passed":true},{"name":"backlog-schema","passed":true}]},"error":null}
+```
+
+`backlog.yaml` is the output artifact. Workspace changes are side effects.
+
+## Validation
+
+Validate YAML syntax, the bundled schema, unique IDs, ordered dependencies, and existing contract references.
+
+## Failure Conditions
+
+Return `{"status":"failure","outputs":{},"validation":{"checks":[]},"error":{"code":"BACKLOG_GENERATION_FAILED","message":"..."}}` without writing a backlog for failed preconditions or validation.
+
 ## Output
 
 - `backlog.yaml`

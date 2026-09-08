@@ -22,6 +22,29 @@ examples to the current project.
 Return Markdown sections only unless the user explicitly asks to edit files.
 Prefer concrete repo evidence over guessed placeholders.
 
+## Inputs
+
+- Repository workspace and current `AGENTS.md`, when present.
+- Requested policy scope, when supplied.
+
+## Outputs
+
+Return:
+
+```json
+{"status":"success","outputs":{"artifactPaths":["AGENTS.md"],"workspaceStatus":"changed"},"validation":{"checks":[{"name":"policy-sanity-check","passed":true}]},"error":null}
+```
+
+List only artifacts actually created or updated. Generated policy text and workspace changes are side effects, not result contents.
+
+## Validation
+
+Confirm generated sections have no unresolved placeholders and reference only discovered repository facts.
+
+## Failure Conditions
+
+Return `{"status":"failure","outputs":{},"validation":{"checks":[]},"error":{"code":"POLICY_GENERATION_FAILED","message":"..."}}` without writing policies when required repository facts cannot be established.
+
 ## Output Contract
 
 - Emit ready-to-paste Markdown sections.

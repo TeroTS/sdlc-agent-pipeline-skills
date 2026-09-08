@@ -11,6 +11,29 @@ description: >
 
 Make the repository as Codex-CLI friendly as possible by minimizing ambiguity, maximizing determinism, and providing a single, reliable “golden path” for setup and verification.
 
+## Inputs
+
+- Repository workspace and its current baseline.
+- Requested hardening scope, when supplied.
+
+## Outputs
+
+Return:
+
+```json
+{"status":"success","outputs":{"artifactPaths":["AGENTS.md","scripts/setup","scripts/verify"],"workspaceStatus":"changed"},"validation":{"checks":[{"name":"setup","passed":true},{"name":"verify","passed":true}]},"error":null}
+```
+
+List only artifacts actually created or updated. Workspace changes are side effects.
+
+## Validation
+
+Run applicable setup, verification, and documented single-test commands.
+
+## Failure Conditions
+
+Return `{"status":"failure","outputs":{},"validation":{"checks":[]},"error":{"code":"HARDENING_FAILED","message":"..."}}` without claiming success when repository tooling or required commands cannot be established or pass.
+
 ## Non-Negotiable Principles
 
 - Prefer **one-command setup** and **one-command verification**.
