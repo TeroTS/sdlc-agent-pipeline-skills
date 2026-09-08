@@ -1,0 +1,4 @@
+interface:
+  display_name: "Decision to Contracts"
+  short_description: "Turn DECISIONS.md into contract artifacts"
+  default_prompt: "Use $decision-to-contracts to turn DECISIONS.md into explicit contract artifacts, defaulting to openapi.yaml for HTTP interfaces and docs/contracts.md for the rest."
