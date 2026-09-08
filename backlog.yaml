@@ -1,0 +1,34 @@
+version: 1
+
+stories:
+  - id: S001
+    title: Create decisions-to-stories skill
+    status: done
+    dependsOn: []
+    goal: Planners can derive a validated implementation backlog directly from locked decisions.
+    scope:
+      include:
+        - decisions-to-stories skill and agent definition
+        - YAML backlog template and schema
+        - Contract-skill handoffs
+        - Removal of decision-to-spec and lean-story-delivery
+      exclude:
+        - Story implementation
+        - Contract generation
+        - Existing backlog updates
+    contractRefs: []
+    acceptanceCriteria:
+      - A ready DECISIONS.md produces a dependency-ordered repo-root backlog.yaml.
+      - Every generated story has the required schema fields.
+      - Existing backlog.yaml causes an error without modification.
+      - Missing or unavailable contracts result in an empty contractRefs list.
+    requiredTests:
+      - Parse the backlog template as YAML.
+      - Validate the backlog schema as JSON.
+      - Verify required template fields match the schema.
+      - Verify obsolete skills are absent and contract handoffs target decisions-to-stories.
+    definitionOfDone:
+      - Required tests pass.
+      - The generated backlog validates against the bundled schema.
+      - decision-to-spec and lean-story-delivery are removed.
+      - Contract skill handoffs target decisions-to-stories.

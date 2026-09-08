@@ -1,0 +1,21 @@
+version: 1
+
+stories:
+  - id: S001
+    title: Story title
+    status: pending
+    dependsOn: []
+    goal: User-visible outcome.
+    scope:
+      include:
+        - Included behavior
+      exclude:
+        - Deferred behavior
+    contractRefs: []
+    acceptanceCriteria:
+      - Observable expected behavior.
+    requiredTests:
+      - Test proving the expected behavior.
+    definitionOfDone:
+      - Required tests pass.
+      - Contract implementation matches contractRefs.

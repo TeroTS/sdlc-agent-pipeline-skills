@@ -46,14 +46,12 @@ Otherwise default to the root `openapi.yaml` and `docs/contracts.md`.
 - If no HTTP surfaces exist, do not create fake OpenAPI. Write only
   `docs/contracts.md`.
 
-### 4. Handoff to slice planning
+### 4. Handoff to story generation
 
 - Stop after the contract artifacts are written.
-- In the final handoff, name the contract files the next slice-planning step
-  must read.
-- The next step is `$lean-story-delivery`.
-- When slice planning starts, the relevant contract artifacts must be listed in
-  `docs/slices/current-slice.md` under `## Contract Inputs`.
+- In the final handoff, name the contract files `$decisions-to-stories` must
+  read.
+- The next step is `$decisions-to-stories`.
 
 ## Rules
 

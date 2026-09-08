@@ -1,0 +1,4 @@
+interface:
+  display_name: "Decisions to Stories"
+  short_description: "Turn DECISIONS.md into a validated YAML backlog"
+  default_prompt: "Use $decisions-to-stories to turn the ready repo-root DECISIONS.md into a validated, dependency-ordered backlog.yaml without implementing stories."
