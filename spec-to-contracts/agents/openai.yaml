@@ -1,4 +1,0 @@
-interface:
-  display_name: "Spec to Contracts"
-  short_description: "Turn SPEC.md into contract artifacts"
-  default_prompt: "Use $spec-to-contracts to turn SPEC.md into explicit contract artifacts, defaulting to openapi.yaml for HTTP interfaces and docs/contracts.md for the rest."
